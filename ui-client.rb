@@ -21,15 +21,12 @@ class ChatClient
     dialog.vbox.add(entry)
     dialog.show_all
 
-    dialog.run do |response|
-      if response == Gtk::ResponseType::OK
-        @server = entry.text
-        dialog.destroy
-      else
-        dialog.destroy
-        return
-      end
-    end
+dialog.run do |response|
+  if response == Gtk::ResponseType::OK
+    @server = entry.text
+  end
+  dialog.destroy
+end
 
     @window = Gtk::Window.new
     @window.set_title("Chat Client")
