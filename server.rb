@@ -23,8 +23,11 @@ class ChatServer
             client.close
             @clients.delete(client)
             break
+          elsif message.downcase == 'get_chat_log'
+            send_chat_log(client)
           else
             broadcast(message, client)
+            save_to_chat_log(message)
           end
         end
       end
@@ -36,9 +39,18 @@ class ChatServer
       next if client == sender
       client.puts "#{sender.peeraddr[1]}: #{message}"
     end
+  end
 
-    @chat_log.puts("#{sender.peeraddr[1]}: #{message}")
+  def save_to_chat_log(message)
+    @chat_log.puts(message)
     @chat_log.flush
+  end
+
+  def send_chat_log(client)
+    @chat_log.rewind
+    @chat_log.each do |line|
+      client.puts line.chomp
+    end
   end
 end
 
