@@ -37,9 +37,57 @@ class ChatClient
     Gtk.main
   end
 
-  # Rest of the code remains unchanged...
+  def start_chat
+    @window = Gtk::Window.new
+    @window.set_title("Chat Client")
+    @window.set_default_size(400, 300)
+
+    @vbox = Gtk::Box.new(:vertical, 5)
+    @window.add(@vbox)
+
+    @textview = Gtk::TextView.new
+    @textview.set_editable(false)
+    @vbox.pack_start(@textview, :expand => true, :fill => true, :padding => 5)
+
+    @entry = Gtk::Entry.new
+    @vbox.pack_start(@entry, :expand => false, :fill => false, :padding => 5)
+
+    @entry.signal_connect("activate") do
+      message = @entry.text
+      @socket.puts("#{@username}: #{message}")
+      @entry.text = ""
+    end
+
+    @window.signal_connect("delete-event") do
+      @socket.close
+      Gtk.main_quit
+    end
+
+    @window.show_all
+
+    puts "Enter your username:"
+    @username = $stdin.gets.chomp
+
+    @socket = TCPSocket.new(@server, @port)
+    @socket.puts(@username)
+
+    Thread.new do
+      loop do
+        message = @socket.gets.chomp
+        append_textview(message, false)
+      end
+    end
+  end
+
+  def append_textview(message, is_sent_by_user)
+    buffer = @textview.buffer
+    if is_sent_by_user
+      buffer.text = buffer.text + "You: #{message}\n"
+    else
+      buffer.text = buffer.text + message + "\n"
+    end
+  end
 end
 
 client = ChatClient.new
 client.start
-

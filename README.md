@@ -1,2 +1,0 @@
-# chatinpython
-Python Chat App
