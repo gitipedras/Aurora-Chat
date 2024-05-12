@@ -2,6 +2,8 @@ require 'socket'
 
 class ChatClient
   def initialize(server, port)
+    puts "Enter server:"
+    server = gets.chomp
     @server = server
     @port = port
     @username = nil
