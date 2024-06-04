@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
-    <style>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+<style>
 body {
     font-family: monospace;
     margin: 0;
@@ -78,14 +81,23 @@ code {
 </head>
 <body>
     <div class="container">
-        <header>
+        <header class="title_font">
             <h1>Aurora Chat</h1>
         </header>
-        <main>
-        <h2> A <b>chat</b> for <a href="">everyone</a></h2>
 
+        <div class="featured">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="company-logo" width="50%">
+        <p>Anyone can <a href="/login">talk</a></p>
+
+    </div>
+        <main>
+
+        <div class="bigtext">
         <a href="/login">Login</a>
         <a href="/signup">Signup</a>
+        <a href="/webapp">Launch Web App</a>
+    </div>
+
             
         </main>
     </div>

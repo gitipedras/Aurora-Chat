@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+</head>
+
+
+        <style>
+        code {
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: courier, monospace;
+  padding: 0 3px;
+  border: 1px solid black;
+}
+
+       a{
+           font-family: monospace;
+            /**font-size: 14px;**/
+            text-decoration: dotted;
+            color: #076a8e;
+        }
+        a:hover {
+            font-family: monospace;
+            /**font-size: 14px;**/
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            color: #076a8e;
+        }
+        .bigtext {
+    font-size:30px;
+}
+
+.bigtext a {
+    background-color: #FFA2A2;
+    border: 1px solid black;
+    color: black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.bigtext a:hover {
+    background-color: #FFA2A2;
+    border: 1px solid black;
+    color: black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.featured {
+    display: flex;
+}
+
+.featured p {
+    font-size: 30px;
+}
+
+    </style>
+<body>
+	    <div class="bigtext">
+    	 <br>
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+        <a href="/webapp">Launch Web App</a>
+    </div>
+    <h2>Sign Up</h2>
+    <form action="/signup" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Sign Up">
+    </form>
+</body>
+</html>

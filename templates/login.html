@@ -5,9 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        code {
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: courier, monospace;
+  padding: 0 3px;
+  border: 1px solid black;
+}
+
+       a{
+           font-family: monospace;
+            /**font-size: 14px;**/
+            text-decoration: dotted;
+            color: #076a8e;
+        }
+        a:hover {
+            font-family: monospace;
+            /**font-size: 14px;**/
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            color: #076a8e;
+        }
+    </style>
 </head>
-<body>
+<body>    
+    <div class="bigtext">
+         <br>
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+        <a href="/webapp">Launch Web App</a>
+    </div>
     <div class="container">
+
         <h2>Login</h2>
         {% if error %}
             <p class="error">{{ error }}</p>

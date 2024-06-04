@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         /* styles.css */
 
@@ -77,8 +78,39 @@ h1 {
 }
 
     </style>
+        <style>
+        code {
+  background-color: #eee;
+  border-radius: 3px;
+  font-family: courier, monospace;
+  padding: 0 3px;
+  border: 1px solid black;
+}
+
+       a{
+           font-family: monospace;
+            /**font-size: 14px;**/
+            text-decoration: dotted;
+            color: #076a8e;
+        }
+        a:hover {
+            font-family: monospace;
+            /**font-size: 14px;**/
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            color: #076a8e;
+        }
+    </style>
 </head>
+
 <body>
+        <div class="bigtext">
+            <br>
+ 
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+        <a href="/webapp">Launch Web App</a>
+    </div>
     <h1>Message Board</h1>
     <form action="/send" method="post">
         <textarea name="message" rows="4" cols="50"></textarea>
