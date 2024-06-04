@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <style>
+        <style>
         code {
   background-color: #eee;
   border-radius: 3px;
@@ -27,6 +26,79 @@
             text-decoration-style: dashed;
             color: #076a8e;
         }
+        .bigtext {
+    font-size:30px;
+}
+
+.bigtext a {
+    background-color: #FFA2A2;
+    border: 1px solid black;
+    color: black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.bigtext a:hover {
+    background-color: #FFA2A2;
+    border: 1px solid black;
+    color: black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.featured {
+    display: flex;
+}
+
+.featured p {
+    font-size: 30px;
+}
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+        }
+
     </style>
 </head>
 <body>    
@@ -49,6 +121,10 @@
             <input type="password" id="password" name="password" required>
             <button type="submit">Login</button>
         </form>
+
+        <div class="message">
+        <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    </div>
     </div>
 </body>
 </html>
