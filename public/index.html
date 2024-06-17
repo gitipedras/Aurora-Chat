@@ -1,0 +1,74 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Chat</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #messages { list-style-type: none; padding: 0; }
+    #messages li { padding: 8px; margin-bottom: 10px; background-color: #f4f4f4; }
+    #form { display: flex; margin-top: 10px; }
+    #input, #username { padding: 10px; font-size: 16px; }
+    #input { flex: 1; }
+    #send-button { padding: 10px; font-size: 16px; }
+    #username-section { display: flex; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+  <div class="sidebar">
+      <ul>
+        <br>
+        <h2> Aurora Chat </h2>
+        <p id="currentchannel"></p>
+        <p> Channels </p>
+        <li><a href="?channel=general">General</a></li>
+        <li><a href="?channel=chat">Chat</a></li>
+        <li><a href="announcements.html">Announcements</a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+  <div id="username-section">
+    <input id="username" placeholder="Enter your username" autocomplete="off" />
+    <button id="set-username-button">Set Username</button>
+  </div>
+  <ul id="messages"></ul>
+  <form id="form" action="">
+    <input id="input" autocomplete="off" placeholder="Type your message" disabled /><button id="send-button" disabled>Send</button>
+  </form>
+
+</div>
+  <script src="/socket.io/socket.io.js"></script>
+<script src="webapp.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+
+  <script> 
+try {
+  const url = new URL(window.location.href);
+  const channel = url.searchParams.get("channel");
+  console.log(channel); // Optional: Log the channel name
+
+  // Update the content of the <p> element with ID "currentchannel" (if it exists)
+  const currentChannelElement = document.getElementById('currentchannel');
+  if (currentChannelElement) {
+    currentChannelElement.textContent = `Channel: ${channel}`;
+  } else {
+    console.warn("Element with ID 'currentchannel' not found");
+  }
+} catch (error) {
+  console.error("Error creating URL object:", error);
+}
+
+
+</script>
+
+  </script>
+</div>
+</body>
+</html>
