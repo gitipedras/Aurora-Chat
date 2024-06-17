@@ -1,0 +1,47 @@
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('../images/grass.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        h1 {
+            color: #256eaa;     
+            font-family: monospace;
+            font-size: 30px;  
+        }
+        .container {
+            /**max-width: 1200px;**/
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            /**border-radius: 8px;**/
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            position: fixed;
+            /*width: 990px;*/
+            width: 100%;
+            /**display: block;**/
+
+        }
+        .sidebar {
+            float: left;
+            position: fixed;
+        }
+        .content {
+            
+        }
+        a{
+           font-family: monospace;
+            font-size: 14px;
+            text-decoration: dotted;
+            color: #076a8e;
+        }
+        a:hover {
+            font-family: monospace;
+            font-size: 14px;
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            color: #076a8e;
+        }

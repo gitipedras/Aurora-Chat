@@ -29,6 +29,7 @@
         <li><a href="?channel=general">General</a></li>
         <li><a href="?channel=chat">Chat</a></li>
         <li><a href="announcements.html">Announcements</a></li>
+        <li><a href="blog/index.html">Blog</a></li>
       </ul>
     </div>
 
@@ -37,6 +38,8 @@
     <input id="username" placeholder="Enter your username" autocomplete="off" />
     <button id="set-username-button">Set Username</button>
   </div>
+
+
   <ul id="messages"></ul>
   <form id="form" action="">
     <input id="input" autocomplete="off" placeholder="Type your message" disabled /><button id="send-button" disabled>Send</button>
@@ -47,6 +50,9 @@
 <script src="webapp.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+
+
+
 
   <script> 
 try {
@@ -68,7 +74,27 @@ try {
 
 </script>
 
-  </script>
+<script>
+
+
+  function saveMessage(channel, message) {
+  const filename = `chats/${channel}.txt`;
+  const content = `${message.username}: ${message.text}\n`; // Add newline for each message
+
+  // Append message to the file (or create it if it doesn't exist)
+  fs.appendFile(filename, content, (err) => {
+    if (err) {
+      console.error('Error saving message:', err);
+    } else {
+      console.log(`Message saved to ${filename}`);
+    }
+  });
+}
+
+
+</script>
+</div>
+
 </div>
 </body>
 </html>
