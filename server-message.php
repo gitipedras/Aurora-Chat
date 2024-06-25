@@ -12,18 +12,9 @@ $username = $_SESSION['username'];
 $serversDir = "servers/";
 $chatsDir = "chats/";
 
-// Check if server_id and channel are provided in URL
-if (!isset($_GET['server_id']) || !isset($_GET['channel'])) {
-    die("Server or Channel not specified.");
-}
-
-$serverId = $_GET['server_id'];
-$channelName = $_GET['channel'];
-
-// Function to get channel history
-function getChannelHistory($serverId, $channelName) {
+function getChannelHistory($serverName, $channelName) {
     global $serversDir;
-    $channelFilePath = $serversDir . $serverId . "/" . $channelName . ".txt";
+    $channelFilePath = $serversDir . $serverName . "/" . $channelName . ".txt";
     if (file_exists($channelFilePath)) {
         return file_get_contents($channelFilePath);
     } else {
@@ -31,28 +22,72 @@ function getChannelHistory($serverId, $channelName) {
     }
 }
 
-// Handle sending messages
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['server']) && isset($_POST['channel']) && isset($_POST['message'])) {
-        $serverId = $_POST['server'];
-        $channelName = $_POST['channel'];
-        $message = $_POST['message'];
-        $channelFilePath = $serversDir . $serverId . "/" . $channelName . ".txt";
-        
-        // Format message with timestamp
-        $timestamp = date('Y-m-d H:i:s');
-        $newMessage = "[$timestamp] $username: $message\n";
-        
-        // Append message to channel file
-        file_put_contents($channelFilePath, $newMessage, FILE_APPEND | LOCK_EX);
-        
-        // Send response back to indicate success
-        echo json_encode(array('status' => 'success'));
-        exit();
+// Function to check if a channel is locked
+function isChannelLocked($serverName, $channelName) {
+    global $serversDir;
+    $channelPemFile = $serversDir . $serverName . "/pem.json";
+    if (file_exists($channelPemFile)) {
+        $pem = json_decode(file_get_contents($channelPemFile), true);
+        if (isset($pem['locked_channels']) && in_array($channelName, $pem['locked_channels'])) {
+            return true;
+        }
     }
+    return false;
 }
 
-$channelHistory = getChannelHistory($serverId, $channelName);
+// Function to check if a user is admin or owner
+function isUserAdminOrOwner($serverName, $username) {
+    global $serversDir;
+    $channelPemFile = $serversDir . $serverName . "/pem.json";
+    if (file_exists($channelPemFile)) {
+        $pem = json_decode(file_get_contents($channelPemFile), true);
+        if (isset($pem['owner']) && $pem['owner'] === $username) {
+            return true;
+        }
+        if (isset($pem['admins']) && in_array($username, $pem['admins'])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to clear channel messages
+function clearChannelMessages($serverName, $channelName) {
+    global $serversDir;
+    $channelFilePath = $serversDir . $serverName . "/" . $channelName . ".txt";
+    if (file_exists($channelFilePath)) {
+        file_put_contents($channelFilePath, ""); // Clear the file
+        return true;
+    }
+    return false;
+}
+
+// Check if server_id and channel are provided in URL
+if (!isset($_GET['server_id']) || !isset($_GET['channel'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Server or channel not specified.']);
+    exit();
+}
+
+$serverName = $_GET['server_id'];
+$channelName = $_GET['channel'];
+$channelHistory = getChannelHistory($serverName, $channelName);
+
+// Check if channel is locked
+$channelLocked = isChannelLocked($serverName, $channelName);
+
+// Check if user is admin or owner
+$isAdminOrOwner = isUserAdminOrOwner($serverName, $username);
+
+// Handle clear messages request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'clear_messages') {
+    if ($isAdminOrOwner) {
+        clearChannelMessages($serverName, $channelName);
+        echo json_encode(['status' => 'success']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+    }
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,79 +101,75 @@ $channelHistory = getChannelHistory($serverId, $channelName);
         .container {
             font-family: 'Montserrat', sans-serif;
         }
-        .server-name {
-            color: #333;
-        }
-        .message-container {
-            border: 1px solid #ccc;
-            padding: 10px;
-            max-height: 300px;
-            overflow-y: scroll;
-        }
-        .message {
-            margin-bottom: 10px;
-        }
     </style>
     <script>
-    $(document).ready(function() {
-        // Function to refresh channel messages
-        function refreshChannel() {
-            $.ajax({
-                url: window.location.href,
-                type: 'GET',
-                cache: false,
-                success: function(data) {
-                    var newMessages = $(data).find('#channel-history').html();
-                    $('#channel-history').html(newMessages);
-                    $('#channel-history').scrollTop($('#channel-history')[0].scrollHeight);
-                },
-                complete: function() {
-                    setTimeout(refreshChannel, 2000); // Refresh every 2 seconds
-                }
-            });
-        }
-        
-        // Initial call to refresh channel messages
-        refreshChannel();
-        
-        // Handle sending messages
-        $('#message-form').submit(function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        // Clear and focus input field after sending message
-                        $('#message').val('').focus();
-                    }
+        $(document).ready(function() {
+            // Function to clear all messages
+            $('#clear-messages-btn').click(function() {
+                if (confirm('Are you sure you want to clear all messages?')) {
+                    $.ajax({
+                        url: 'server-message.php?server_id=<?php echo urlencode($serverName); ?>&channel=<?php echo urlencode($channelName); ?>',
+                        type: 'POST',
+                        data: {
+                            action: 'clear_messages',
+                            server_id: '<?php echo htmlspecialchars($serverName); ?>',
+                            channel: '<?php echo htmlspecialchars($channelName); ?>'
+                        },
+                        success: function(response) {
+                            try {
+                                var data = JSON.parse(response);
+                                if (data.status === 'success') {
+                                    $('#channel-history').html('');
+                                    alert('Messages cleared successfully.');
+                                } else {
+                                    alert('Failed to clear messages: ' + data.message);
+                                }
+                            } catch (e) {
+                                alert('Failed to parse response: ' + response);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert('AJAX request failed: ' + error);
+                        }
+                    });
                 }
             });
         });
-    });
     </script>
 </head>
 <body>
     <div class="container">
-        <h2 class="server-name">Server: <?php echo htmlspecialchars($serverId); ?></h2>
-        <a href="server.php?server_id=<?php echo urlencode($serverId); ?>">Back to Server</a>
-        <h3 class="server-name">Channel: <?php echo isset($_GET['channel']) ? htmlspecialchars($_GET['channel']) : 'Channel name not specified'; ?></h3>
-        <div id="channel-history" class="message-container">
-            <?php echo nl2br(htmlspecialchars($channelHistory)); ?>
+        <h2>Server: <?php echo htmlspecialchars($serverName); ?></h2>
+        <a href="server.php?server_id=<?php echo urlencode($serverName); ?>">Back to Server</a>
+        <h3>Channel: <?php echo htmlspecialchars($channelName); ?></h3>
+        
+        <div id="channel-history">
+            <h3>Messages:</h3>
+            <div style="border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: scroll;">
+                <?php echo nl2br(htmlspecialchars($channelHistory)); ?>
+            </div>
         </div>
+        
         <br>
-        <div>
-            <h3>Send Message:</h3>
-            <form id="message-form" method="post" action="server-message.php?server_id=<?php echo urlencode($serverId); ?>&channel=<?php echo urlencode($channelName); ?>">
-                <input type="hidden" name="server" value="<?php echo htmlspecialchars($serverId); ?>">
-                <input type="hidden" name="channel" value="<?php echo htmlspecialchars($channelName); ?>">
-                <input type="text" id="message" name="message" placeholder="Type your message here..." required>
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
+        
+        <?php if ($channelLocked && !$isAdminOrOwner): ?>
+            <p>This channel is locked. Only admins can send messages.</p>
+        <?php else: ?>
+            <div>
+                <h3>Send Message:</h3>
+                <form id="message-form" method="post" action="server-message.php">
+                    <input type="hidden" name="server_id" value="<?php echo htmlspecialchars($serverName); ?>">
+                    <input type="hidden" name="channel" value="<?php echo htmlspecialchars($channelName); ?>">
+                    <input type="text" id="message" name="message" placeholder="Type your message here..." required>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        <?php endif; ?>
+        
+        <?php if ($isAdminOrOwner): ?>
+<br>
+            <button id="clear-messages-btn">Clear All Messages</button>
+        <?php endif; ?>
     </div>
 </body>
 </html>

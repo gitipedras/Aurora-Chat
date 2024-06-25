@@ -1,10 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+/* Base styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'LXGW WenKai Mono TC', sans-serif;
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
 }
 
+.new {
+border: 1px solid red;
+border-radius: 5px;
+background-color: red;
+font-size: 18px;
+}
+
+.error {
+color: red;
+}
+
+.error-box {
+color: red;
+}
+
+.warning {
+color: orange;
+border: 1px solid red;
+border-radius: 5px;
+background-color: red;
+font-size: 18px;
+}
+
+.settings-edit a {
+text-decoration: none;
+font-size: 15px;
+color: #fff;
+
+}
+
+.settings-edit a:hover {
+text-decoration: none;
+
+}
 .container {
     background-color: #ffffff;
     padding: 20px;
@@ -14,13 +54,19 @@ body {
     margin: 20px auto;
 }
 
+h1 {
+font-family: 'Bungee Spice';
+
+}
+
 h2, h3 {
+    font-family: 'Major Mono Display';
     color: #333333;
     margin-bottom: 10px;
 }
 
 a {
-    color: #007bff;
+    color: #a25fcc;
     text-decoration: none;
 }
 
@@ -28,31 +74,10 @@ a:hover {
     text-decoration: underline;
 }
 
-.tablink {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px 4px 0 0;
-    transition: background-color 0.3s ease;
-}
 
-.tablink:hover {
-    background-color: #0056b3;
-}
-
-.tabcontent {
-    display: none;
-    padding: 10px;
-    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 4px 4px;
-}
 
 .active {
-    background-color: #0056b3 !important;
+    background-color: #a25fcc !important;
 }
 
 .chatBox {
@@ -79,37 +104,23 @@ textarea {
     resize: none;
 }
 
-button[type="submit"] {
+button[type="submit"], button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #a25fcc;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    margin: 3px;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover, button:hover {
     background-color: #0056b3;
 }
 
 .server-name {
-font-family: 'Montserrat';
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-
-button:hover {
-    background-color: #0056b3;
+    font-family: 'Montserrat';
 }
 
 @media screen and (max-width: 600px) {
@@ -119,23 +130,33 @@ button:hover {
     }
 }
 
-
-input[type=text] {
+input[type=text], input[type=password] {
     padding: 10px 20px;
     background-color: inherit;
     color: black;
-    border: none;
+    border: 1px solid #007bff;
     cursor: pointer;
     border-radius: 4px;
-    border: 1px solid #007bff;
 }
 
-input[type=password] {
-    padding: 10px 20px;
-    background-color: inherit;
-    color: black;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #007bff;
+/* Accent colors: Red and Purple */
+
+.tablink {
+    background-color: #ff5297;
+    font-family: "LXGW WenKai Mono TC";
 }
+
+.tablink:hover {
+    background-color: #c43e74;
+}
+
+.tabcontent {
+    background: #fff;
+    border-color: #ff5297;
+}
+
+.chatBox {
+    background: linear-gradient(to bottom, #8d6bfc, #5e5ce6);
+    border-color: #5e5ce6;
+}
+

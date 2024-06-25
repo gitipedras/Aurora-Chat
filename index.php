@@ -8,6 +8,8 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
+$auroraversion = "v0.1.8";
+
 $username = $_SESSION['username'];
 $friendsFile = "data/friends-$username.json";
 $usersFile = "users.json";
@@ -215,11 +217,11 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
     <link rel="stylesheet" type="text/css" href="styles.css">
    <style>
 .accordion {
-  background-color: #eee;
-  color: #444;
+  background-color: #a25fcc;
+  color: #fff;
   cursor: pointer;
   padding: 18px;
-  width: 100%;
+  width: 50%;
   border: none;
   text-align: left;
   outline: none;
@@ -228,20 +230,21 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
 }
 
 .active, .accordion:hover {
-  background-color: #ccc; 
+  background-color: #a25fcc; 
 }
 
 .panel {
   padding: 0 18px;
   display: none;
-  background-color: white;
+  background-color: #fff;
   overflow: hidden;
 }
 </style>
 </head>
 <body>
  <div class="container">
-        <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
+ 
+      <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
         <a href="logout.php">Logout</a>
         <br><br>
         <div class="tabs">
@@ -249,11 +252,31 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
             <button class="tablink" onclick="openTab('Friends', this)">Friends</button>
             <button class="tablink" onclick="openTab('Chats', this)">Chats</button>
             <button class="tablink" onclick="openTab('Servers', this)">Servers</button>
+	    <button class="tablink" onclick="openTab('Settings', this)">Settings <span class="new">!</span></button>
         </div>
 
+
+ <div id="Settings" class="tabcontent">
+	    <h3>Settings</h3>
+<div class="error-box">
+<p> <b style="font-family:'Bungee Spice';">W</b>arning: features in red are beta and do not work</p>
+  	    <p> Username: <b><?php echo $username; ?> </b> <button class="settings-edit"><a class="settings-edit" href="change-username.php">&#9998;</a></button></p>
+	    <p> Password: <button class="settings-edit"><a class="settings-edit" href="change-password.php">&#9998;</a></button></p>
+	    <p> Delete Account:  <button class="settings-edit"><a class="settings-edit" href="delete-account.php">&#128465;</a></button></p>
+   </div>   
+        </div>
+
+
+
         <div id="Home" class="tabcontent">
-            <h3>Home</h3>
-            <p>This is the home tab.</p>
+           <h3>Home</h3>
+  	    <p> Logged in as: <b><?php echo $username; ?> </b></p>
+            <p> Aurora Version: <b style="color:green;"><?php echo $auroraversion; ?></b></p>
+            <p> Chats directory: <?php echo $chatsDir; ?></p>
+            <p> servers file: <?php echo $serversFile; ?></p>
+	    <p> Github: <a href="https://github.com/gitipedras/Aurora-Chat">here</a></p>
+	    <p> Discord: <a href="https://github.com/gitipedras/Aurora-Chat/wiki/Discord-(Updated-Link)">here</a></p>
+           
         </div>
 
         <div id="Friends" class="tabcontent">
@@ -385,6 +408,8 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
+
+
 </script>
     <script>
         function openTab(tabName, elmnt) {

@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Aurora Chat - Signup</title>
+    <title>404 - Not Found</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
 .container {
@@ -65,26 +65,22 @@ background-color: #fff;
 .container input[type=password] {
 background-color: #fff;
 }
+
 </style>
 </head>
 <body>
     <div class="container">
-        <h2>Signup</h2>
-<p>By signing up you agree to the <a href="404.php">terms of service / privacy policy</a></p>
-        <form method="post" action="signup.php">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-<br>
-<br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-<br>
-<br>
-            <button type="submit">Signup</button>
-<br>
-<br>
-	    <a href="login.php"> Login </a>
-        </form>
+        <h2>Error 404</h2>
+<p>Error code: <code>404</code> | <button onclick="learnmore()"> Learn More </button></p>
+<p> The requested location was not found on this server</p>
+    
+
+<script>
+function learnmore(message) {
+    alert("You will be redirected to wikipedia.org");
+    window.location.href = ' https://en.wikipedia.org/wiki/HTTP_404';
+}
+</script>
     </div>
 </body>
 </html>
