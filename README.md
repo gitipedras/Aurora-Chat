@@ -19,3 +19,7 @@ You can install dependicies by doing:
 
 ```sudo apt-get install php```
 
+
+## Loggin in to default user
+`username`:`aurora-user` <br>
+`passwrod`:`test` <br>
