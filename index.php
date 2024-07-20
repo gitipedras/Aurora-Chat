@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$auroraversion = "v0.1.8";
+$auroraversion = "v0.2.5";
 
 $username = $_SESSION['username'];
 $friendsFile = "data/friends-$username.json";
@@ -213,6 +213,7 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aurora Chat - Home</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
    <style>
@@ -230,6 +231,7 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
 }
 
 .active, .accordion:hover {
+    font-family: Poppins, Segoe UI, sans-serif;
   background-color: #a25fcc; 
 }
 
@@ -242,8 +244,25 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
 </style>
 </head>
 <body>
+  
  <div class="container">
- 
+ <noscript>
+        <style type="text/css">
+            .ctl2 {
+                display: none;
+            }
+        </style>
+        <h2>Javascript Error</h2>
+        <p>It seems like your web browser does not have/support javascript. Please enable it or update your browser to the <b>latest</b> version.</p>
+        <a href="https://support.google.com/adsense/answer/12654?hl=en">Activate for Chrome</a><br>
+         <a href="https://support.microsoft.com/en-us/microsoft-edge">Activate for Microsoft Edge</a><br>
+          <a href="https://support.mozilla.org/en-US/kb/javascript-settings-for-interactive-web-pages">Activate for Firefox</a><br>
+           <a href="https://support.apple.com/safari">Activate for Safari</a><br>
+
+            <a href="">Ok, It's enabled</a><br>
+    </noscript>
+    <br>
+ <div class="ctl2">
       <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
         <a href="logout.php">Logout</a>
         <br><br>
@@ -251,8 +270,8 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
             <button class="tablink" onclick="openTab('Home', this)">Home</button>
             <button class="tablink" onclick="openTab('Friends', this)">Friends</button>
             <button class="tablink" onclick="openTab('Chats', this)">Chats</button>
-            <button class="tablink" onclick="openTab('Servers', this)">Servers</button>
-	    <button class="tablink" onclick="openTab('Settings', this)">Settings <span class="new">!</span></button>
+            <!--<button class="tablink" onclick="openTab('Servers', this)">Servers</button>-->
+	    <button class="tablink" onclick="openTab('Settings', this)">Settings <!--<span class="new">!</span>--></button>
         </div>
 
 
@@ -269,6 +288,7 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
 
 
         <div id="Home" class="tabcontent">
+
            <h3>Home</h3>
   	    <p> Logged in as: <b><?php echo $username; ?> </b></p>
             <p> Aurora Version: <b style="color:green;"><?php echo $auroraversion; ?></b></p>
@@ -391,6 +411,8 @@ $servers = getServers(); // Fetch servers here to avoid undefined variable
         <?php endforeach; ?>
     </ul>
     </div>
+</div>
+</form>
 </div>
 
 <script>

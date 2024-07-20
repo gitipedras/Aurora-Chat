@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Aurora Chat - Signup</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
 .container {
@@ -65,12 +66,69 @@ background-color: #fff;
 .container input[type=password] {
 background-color: #fff;
 }
+
+@media screen and (max-width:600px) {
+    .container {
+        padding: 10px;
+        max-width: 100%;
+        background-image: none;
+        background-color: transparent;
+        border:0px solid transparent;
+        border-style: none;
+        box-shadow: none;
+        color: black;
+    }
+    .container a {
+        color: blue;
+    }
+    .tabcontent {
+        background-color: transparent;
+    }
+
+    button[type="submit"], button {
+        font-family: Poppins, Segoe UI, sans-serif;
+        padding: 5px 10px;
+        background-color: #a25fcc;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        margin: 3px;
+        font-size: 20px;
+    }
+
+    button[type="submit"]:hover, button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        font-size: 20px;
+    }
+
+}
 </style>
 </head>
 <body>
     <div class="container">
+         <noscript>
+        <style type="text/css">
+            .ctl2 {
+                display: none;
+            }
+        </style>
+        <h2>Javascript Error</h2>
+        <p>It seems like your web browser does not have/support javascript. Please enable it or update your browser to the <b>latest</b> version.</p>
+        <a href="https://support.google.com/adsense/answer/12654?hl=en">Activate for Chrome</a><br>
+         <a href="https://support.microsoft.com/en-us/microsoft-edge">Activate for Microsoft Edge</a><br>
+          <a href="https://support.mozilla.org/en-US/kb/javascript-settings-for-interactive-web-pages">Activate for Firefox</a><br>
+           <a href="https://support.apple.com/safari">Activate for Safari</a><br>
+
+            <a href="">Ok, It's enabled</a><br>
+    </noscript>
+    <div class="ctl2">
         <h2>Signup</h2>
-<p>By signing up you agree to the <a href="404.php">terms of service / privacy policy</a></p>
+<p>By signing up you agree to the <a href="terms.php" style="color:blue;">terms of service / privacy policy</a></p>
         <form method="post" action="signup.php">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
@@ -86,5 +144,6 @@ background-color: #fff;
 	    <a href="login.php"> Login </a>
         </form>
     </div>
+</div>
 </body>
 </html>

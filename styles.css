@@ -3,12 +3,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* Base styles */
 body {
-    font-family: 'LXGW WenKai Mono TC', sans-serif;
+    font-family: Poppins, Segoe UI, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
+}
+
+.tabs {
+    display: block;
+    float:left;
+    position: fixed;
+    top: 10px;
 }
 
 .new {
@@ -60,13 +68,13 @@ font-family: 'Bungee Spice';
 }
 
 h2, h3 {
-    font-family: 'Major Mono Display';
+    font-family: Poppins, Segoe UI, sans-serif;
     color: #333333;
     margin-bottom: 10px;
 }
 
 a {
-    color: #a25fcc;
+    color: blue;
     text-decoration: none;
 }
 
@@ -105,6 +113,7 @@ textarea {
 }
 
 button[type="submit"], button {
+    font-family: Poppins, Segoe UI, sans-serif;
     padding: 10px 20px;
     background-color: #a25fcc;
     color: white;
@@ -119,16 +128,51 @@ button[type="submit"]:hover, button:hover {
     background-color: #0056b3;
 }
 
-.server-name {
+.server-name { 
     font-family: 'Montserrat';
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width:600px) {
+    .container {
+        padding: 10px;
+        max-width: 100%;
+        background-color: transparent;
+        border:0px solid transparent;
+        border-style: none;
+        box-shadow: none;
+    }
+    .tabcontent {
+        background-color: transparent;
+    }
+    button[type="submit"], button {
+        font-family: Poppins, Segoe UI, sans-serif;
+        padding: 5px 10px;
+        background-color: #a25fcc;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        margin: 3px;
+        font-size: 20px;
+    }
+
+    button[type="submit"]:hover, button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        font-size: 20px;
+    }
+
+}
+
+/*@media screen and (max-width: 600px) {
     .container {
         padding: 10px;
         max-width: 100%;
     }
-}
+}*/
 
 input[type=text], input[type=password] {
     padding: 10px 20px;
@@ -151,7 +195,7 @@ input[type=text], input[type=password] {
 }
 
 .tabcontent {
-    background: #fff;
+    background: transparent;
     border-color: #ff5297;
 }
 

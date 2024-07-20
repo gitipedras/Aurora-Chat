@@ -10,7 +10,10 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 $serversDir = "servers/";
-$chatsDir = "chats/";
+#$chatsDir = "chats/";
+#$serverID = parse_url("serverID");
+
+#$serverID =  $_GET['server_id'];
 
 function getChannelHistory($serverName, $channelName) {
     global $serversDir;
@@ -88,6 +91,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     exit();
 }
+
+// Handle sending messages
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['chat_id']) && isset($_POST['message'])) {
+        $chatId = $_POST['chat_id'];
+        $message = $_POST['message'];
+        $chatFile = $chatsDir . "$chatId.txt";
+        
+        // Format message with timestamp
+        $timestamp = date('Y-m-d H:i:s');
+        $newMessage = "[$timestamp] $username: $message\n";
+        
+        // Append message to chat file
+        file_put_contents($chatFile, $newMessage, FILE_APPEND | LOCK_EX);
+        
+        // Send response back to indicate success
+        echo json_encode(array('status' => 'success'));
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $('#clear-messages-btn').click(function() {
                 if (confirm('Are you sure you want to clear all messages?')) {
                     $.ajax({
-                        url: 'server-message.php?server_id=<?php echo urlencode($serverName); ?>&channel=<?php echo urlencode($channelName); ?>',
+                        url: 'server-message.php?server_id=<?php echo $serverName; ?>&channel=<?php echo $channelName; ?>',
                         type: 'POST',
                         data: {
                             action: 'clear_messages',
@@ -157,7 +180,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         <?php else: ?>
             <div>
                 <h3>Send Message:</h3>
-                <form id="message-form" method="post" action="server-message.php">
+                <p> Sending messages in servers is a <b>BETA</b> feature and does not work </p>
+                <form id="message-form" method="post" action="server-message.php?server_id=<?php echo $_GET['server_id'];?>&channel=<?php echo $channelName; ?>">
                     <input type="hidden" name="server_id" value="<?php echo htmlspecialchars($serverName); ?>">
                     <input type="hidden" name="channel" value="<?php echo htmlspecialchars($channelName); ?>">
                     <input type="text" id="message" name="message" placeholder="Type your message here..." required>

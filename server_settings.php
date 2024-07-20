@@ -208,10 +208,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
 
         <br>
         <!-- Delete Server Form -->
-<form id="delete-server-form" method="post" action="server_settings.php">
+<form id="delete-server-form" method="post" action="delete-server.php">
     <input type="hidden" name="action" value="delete_server">
+    <input type="hidden" name="server_id" value="server_id_here">
     <button type="button" class="delete-server-btn">Delete Server</button>
 </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -231,7 +234,7 @@ $(document).ready(function() {
                 success: function(response) {
                     if (response.status === 'success') {
                         alert("Server deleted successfully.");
-                        window.location.href = 'index.php'; // Redirect to home after deletion
+                        window.location.href = 'index.php#servers'; // Redirect to home after deletion
                     } else {
                         alert("Failed to delete server: " + response.message);
                     }
@@ -245,11 +248,11 @@ $(document).ready(function() {
 });
 </script>
 
+
         <br>
-        <a href="server.php?server_id=">Back to Server</a>
+        <a href="server.php?server_id=<?php echo $serverId; ?>">Back to Server</a>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
         // Delete channel form submission handler
